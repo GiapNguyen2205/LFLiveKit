@@ -9,6 +9,14 @@
 #import "LFVideoCapture.h"
 #import "LFGPUImageBeautyFilter.h"
 #import "LFGPUImageEmptyFilter.h"
+#import "LFGPUSepiaFilter.h"
+#import "LFGPUBlurFilter.h"
+#import "LFGPUSharpenFilter.h"
+#import "LFGPUEmbossFilter.h"
+#import "LFGPUEdgeDetectionFilter.h"
+#import "LFGPUBlackWhiteFilter.h"
+#import "LFGPUVintageFilter.h"
+#import "LFGPUVividFilter.h"
 
 #if __has_include(<GPUImage/GPUImage.h>)
 #import <GPUImage/GPUImage.h>
@@ -167,6 +175,11 @@
     [self reloadFilter];
 }
 
+- (void)setFilterType:(LFLiveFilterType)filterType {
+    _filterType = filterType;
+    [self reloadFilter];
+}
+
 - (void)setBeautyLevel:(CGFloat)beautyLevel {
     _beautyLevel = beautyLevel;
     if (self.beautyFilter) {
@@ -287,14 +300,45 @@
     [self.output removeAllTargets];
     [self.cropfilter removeAllTargets];
     
-    if (self.beautyFace) {
-        self.output = [[LFGPUImageEmptyFilter alloc] init];
-        self.filter = [[LFGPUImageBeautyFilter alloc] init];
-        self.beautyFilter = (LFGPUImageBeautyFilter*)self.filter;
-    } else {
-        self.output = [[LFGPUImageEmptyFilter alloc] init];
-        self.filter = [[LFGPUImageEmptyFilter alloc] init];
-        self.beautyFilter = nil;
+    self.output = [[LFGPUImageEmptyFilter alloc] init];
+    self.beautyFilter = nil;
+    
+    // Tạo filter dựa trên filterType
+    switch (self.filterType) {
+        case LFLiveFilterTypeNone:
+            self.filter = [[LFGPUImageEmptyFilter alloc] init];
+            break;
+        case LFLiveFilterTypeBeauty:
+            self.filter = [[LFGPUImageBeautyFilter alloc] init];
+            self.beautyFilter = (LFGPUImageBeautyFilter*)self.filter;
+            break;
+        case LFLiveFilterTypeSepia:
+            self.filter = [[LFGPUSepiaFilter alloc] init];
+            break;
+        case LFLiveFilterTypeBlur:
+            self.filter = [[LFGPUBlurFilter alloc] init];
+            break;
+        case LFLiveFilterTypeSharpen:
+            self.filter = [[LFGPUSharpenFilter alloc] init];
+            break;
+        case LFLiveFilterTypeEmboss:
+            self.filter = [[LFGPUEmbossFilter alloc] init];
+            break;
+        case LFLiveFilterTypeEdgeDetection:
+            self.filter = [[LFGPUEdgeDetectionFilter alloc] init];
+            break;
+        case LFLiveFilterTypeBlackWhite:
+            self.filter = [[LFGPUBlackWhiteFilter alloc] init];
+            break;
+        case LFLiveFilterTypeVintage:
+            self.filter = [[LFGPUVintageFilter alloc] init];
+            break;
+        case LFLiveFilterTypeVivid:
+            self.filter = [[LFGPUVividFilter alloc] init];
+            break;
+        default:
+            self.filter = [[LFGPUImageEmptyFilter alloc] init];
+            break;
     }
     
     ///< 调节镜像

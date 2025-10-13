@@ -15,6 +15,15 @@
 #import "LFStreamRTMPSocket.h"
 #import "LFLiveStreamInfo.h"
 #import "LFGPUImageBeautyFilter.h"
+#import "LFGPUImageEmptyFilter.h"
+#import "LFGPUSepiaFilter.h"
+#import "LFGPUBlurFilter.h"
+#import "LFGPUSharpenFilter.h"
+#import "LFGPUEmbossFilter.h"
+#import "LFGPUEdgeDetectionFilter.h"
+#import "LFGPUBlackWhiteFilter.h"
+#import "LFGPUVintageFilter.h"
+#import "LFGPUVividFilter.h"
 #import "LFH264VideoEncoder.h"
 
 
@@ -119,6 +128,11 @@
     if(self.captureType & LFLiveInputMaskAudio){
         if (self.uploading) [self.audioEncoder encodeAudioData:audioData timeStamp:NOW];
     }
+}
+
+- (void)setFilter:(LFLiveFilterType)filterType {
+    _filterType = filterType;
+    [self.videoCaptureSource setFilterType:filterType];
 }
 
 #pragma mark -- PrivateMethod

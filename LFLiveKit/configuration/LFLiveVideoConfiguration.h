@@ -5,40 +5,57 @@
 //  Created by LaiFeng on 16/5/20.
 //  Copyright © 2016年 LaiFeng All rights reserved.
 //
+//  Extended to support 1080p and 4K resolutions
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 /// 视频分辨率(都是16：9 当此设备不支持当前分辨率，自动降低一级)
 typedef NS_ENUM (NSUInteger, LFLiveVideoSessionPreset){
-    /// 低分辨率
+    /// 低分辨率 - 360x640
     LFCaptureSessionPreset360x640 = 0,
-    /// 中分辨率
+    /// 中分辨率 - 540x960
     LFCaptureSessionPreset540x960 = 1,
-    /// 高分辨率
-    LFCaptureSessionPreset720x1280 = 2
+    /// 高分辨率 - 720x1280
+    LFCaptureSessionPreset720x1280 = 2,
+    /// Full HD - 1080x1920 (NEW)
+    LFCaptureSessionPreset1080x1920 = 3,
+    /// 4K - 2160x3840 (NEW)
+    LFCaptureSessionPreset2160x3840 = 4
 };
 
 /// 视频质量
 typedef NS_ENUM (NSUInteger, LFLiveVideoQuality){
-    /// 分辨率： 360 *640 帧数：15 码率：500Kps
+    /// 分辨率： 360 * 640 帧数：15 码率：500Kbps
     LFLiveVideoQuality_Low1 = 0,
-    /// 分辨率： 360 *640 帧数：24 码率：800Kps
+    /// 分辨率： 360 * 640 帧数：24 码率：600Kbps
     LFLiveVideoQuality_Low2 = 1,
-    /// 分辨率： 360 *640 帧数：30 码率：800Kps
+    /// 分辨率： 360 * 640 帧数：30 码率：800Kbps
     LFLiveVideoQuality_Low3 = 2,
-    /// 分辨率： 540 *960 帧数：15 码率：800Kps
+    /// 分辨率： 540 * 960 帧数：15 码率：800Kbps
     LFLiveVideoQuality_Medium1 = 3,
-    /// 分辨率： 540 *960 帧数：24 码率：800Kps
+    /// 分辨率： 540 * 960 帧数：24 码率：800Kbps
     LFLiveVideoQuality_Medium2 = 4,
-    /// 分辨率： 540 *960 帧数：30 码率：800Kps
+    /// 分辨率： 540 * 960 帧数：30 码率：1000Kbps
     LFLiveVideoQuality_Medium3 = 5,
-    /// 分辨率： 720 *1280 帧数：15 码率：1000Kps
+    /// 分辨率： 720 * 1280 帧数：15 码率：1000Kbps
     LFLiveVideoQuality_High1 = 6,
-    /// 分辨率： 720 *1280 帧数：24 码率：1200Kps
+    /// 分辨率： 720 * 1280 帧数：24 码率：1200Kbps
     LFLiveVideoQuality_High2 = 7,
-    /// 分辨率： 720 *1280 帧数：30 码率：1200Kps
+    /// 分辨率： 720 * 1280 帧数：30 码率：1200Kbps
     LFLiveVideoQuality_High3 = 8,
+    /// 分辨率： 1080 * 1920 帧数：15 码率：2000Kbps (NEW)
+    LFLiveVideoQuality_Ultra1 = 9,
+    /// 分辨率： 1080 * 1920 帧数：24 码率：3000Kbps (NEW)
+    LFLiveVideoQuality_Ultra2 = 10,
+    /// 分辨率： 1080 * 1920 帧数：30 码率：4000Kbps (NEW)
+    LFLiveVideoQuality_Ultra3 = 11,
+    /// 分辨率： 2160 * 3840 帧数：15 码率：8000Kbps (NEW)
+    LFLiveVideoQuality_4K1 = 12,
+    /// 分辨率： 2160 * 3840 帧数：24 码率：12000Kbps (NEW)
+    LFLiveVideoQuality_4K2 = 13,
+    /// 分辨率： 2160 * 3840 帧数：30 码率：15000Kbps (NEW)
+    LFLiveVideoQuality_4K3 = 14,
     /// 默认配置
     LFLiveVideoQuality_Default = LFLiveVideoQuality_Low2
 };
@@ -49,7 +66,6 @@ typedef NS_ENUM (NSUInteger, LFLiveVideoQuality){
 + (instancetype)defaultConfiguration;
 /// 视频配置(质量)
 + (instancetype)defaultConfigurationForQuality:(LFLiveVideoQuality)videoQuality;
-
 /// 视频配置(质量 & 是否是横屏)
 + (instancetype)defaultConfigurationForQuality:(LFLiveVideoQuality)videoQuality outputImageOrientation:(UIInterfaceOrientation)outputImageOrientation;
 
@@ -93,7 +109,7 @@ typedef NS_ENUM (NSUInteger, LFLiveVideoQuality){
 ///< 分辨率
 @property (nonatomic, assign) LFLiveVideoSessionPreset sessionPreset;
 
-///< ≈sde3分辨率
+///< AVFoundation分辨率
 @property (nonatomic, assign, readonly) NSString *avSessionPreset;
 
 ///< 是否是横屏

@@ -10,6 +10,19 @@
 #import <AVFoundation/AVFoundation.h>
 #import "LFLiveVideoConfiguration.h"
 
+typedef NS_ENUM(NSInteger, LFLiveFilterType) {
+    LFLiveFilterTypeNone = 0,           //< no filter
+    LFLiveFilterTypeBeauty = 1,         //< beauty filter
+    LFLiveFilterTypeSepia = 2,          //< sepia filter
+    LFLiveFilterTypeBlur = 3,           //< blur filter
+    LFLiveFilterTypeSharpen = 4,        //< sharpen filter
+    LFLiveFilterTypeEmboss = 5,         //< emboss filter
+    LFLiveFilterTypeEdgeDetection = 6,  //< edge detection filter
+    LFLiveFilterTypeBlackWhite = 7,     //< black white filter
+    LFLiveFilterTypeVintage = 8,        //< vintage filter
+    LFLiveFilterTypeVivid = 9           //< vivid filter
+};
+
 @class LFVideoCapture;
 /** LFVideoCapture callback videoData */
 @protocol LFVideoCaptureDelegate <NSObject>
@@ -37,6 +50,9 @@
 
 /** The beautyFace control capture shader filter empty or beautiy */
 @property (nonatomic, assign) BOOL beautyFace;
+
+/** The filterType control which filter to use */
+@property (nonatomic, assign) LFLiveFilterType filterType;
 
 /** The torch control capture flash is on or off */
 @property (nonatomic, assign) BOOL torch;

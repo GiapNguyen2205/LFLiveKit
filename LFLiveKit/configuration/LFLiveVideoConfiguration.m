@@ -5,10 +5,10 @@
 //  Created by LaiFeng on 16/5/20.
 //  Copyright © 2016年 LaiFeng All rights reserved.
 //
+//  Extended to support 1080p and 4K resolutions
 
 #import "LFLiveVideoConfiguration.h"
 #import <AVFoundation/AVFoundation.h>
-
 
 @implementation LFLiveVideoConfiguration
 
@@ -126,6 +126,74 @@
         configuration.videoSize = CGSizeMake(720, 1280);
     }
         break;
+    // NEW: 1080p Quality Presets
+    case LFLiveVideoQuality_Ultra1:{
+        configuration.sessionPreset = LFCaptureSessionPreset1080x1920;
+        configuration.videoFrameRate = 15;
+        configuration.videoMaxFrameRate = 15;
+        configuration.videoMinFrameRate = 10;
+        configuration.videoBitRate = 2000 * 1000;
+        configuration.videoMaxBitRate = 2500 * 1000;
+        configuration.videoMinBitRate = 1500 * 1000;
+        configuration.videoSize = CGSizeMake(1080, 1920);
+    }
+        break;
+    case LFLiveVideoQuality_Ultra2:{
+        configuration.sessionPreset = LFCaptureSessionPreset1080x1920;
+        configuration.videoFrameRate = 24;
+        configuration.videoMaxFrameRate = 24;
+        configuration.videoMinFrameRate = 12;
+        configuration.videoBitRate = 3000 * 1000;
+        configuration.videoMaxBitRate = 4000 * 1000;
+        configuration.videoMinBitRate = 2000 * 1000;
+        configuration.videoSize = CGSizeMake(1080, 1920);
+    }
+        break;
+    case LFLiveVideoQuality_Ultra3:{
+        configuration.sessionPreset = LFCaptureSessionPreset1080x1920;
+        configuration.videoFrameRate = 30;
+        configuration.videoMaxFrameRate = 30;
+        configuration.videoMinFrameRate = 15;
+        configuration.videoBitRate = 4000 * 1000;
+        configuration.videoMaxBitRate = 5000 * 1000;
+        configuration.videoMinBitRate = 3000 * 1000;
+        configuration.videoSize = CGSizeMake(1080, 1920);
+    }
+        break;
+    // NEW: 4K Quality Presets
+    case LFLiveVideoQuality_4K1:{
+        configuration.sessionPreset = LFCaptureSessionPreset2160x3840;
+        configuration.videoFrameRate = 15;
+        configuration.videoMaxFrameRate = 15;
+        configuration.videoMinFrameRate = 10;
+        configuration.videoBitRate = 8000 * 1000;
+        configuration.videoMaxBitRate = 10000 * 1000;
+        configuration.videoMinBitRate = 6000 * 1000;
+        configuration.videoSize = CGSizeMake(2160, 3840);
+    }
+        break;
+    case LFLiveVideoQuality_4K2:{
+        configuration.sessionPreset = LFCaptureSessionPreset2160x3840;
+        configuration.videoFrameRate = 24;
+        configuration.videoMaxFrameRate = 24;
+        configuration.videoMinFrameRate = 12;
+        configuration.videoBitRate = 12000 * 1000;
+        configuration.videoMaxBitRate = 15000 * 1000;
+        configuration.videoMinBitRate = 10000 * 1000;
+        configuration.videoSize = CGSizeMake(2160, 3840);
+    }
+        break;
+    case LFLiveVideoQuality_4K3:{
+        configuration.sessionPreset = LFCaptureSessionPreset2160x3840;
+        configuration.videoFrameRate = 30;
+        configuration.videoMaxFrameRate = 30;
+        configuration.videoMinFrameRate = 15;
+        configuration.videoBitRate = 15000 * 1000;
+        configuration.videoMaxBitRate = 20000 * 1000;
+        configuration.videoMinBitRate = 12000 * 1000;
+        configuration.videoSize = CGSizeMake(2160, 3840);
+    }
+        break;
     default:
         break;
     }
@@ -139,7 +207,6 @@
         configuration.videoSize = CGSizeMake(size.width, size.height);
     }
     return configuration;
-    
 }
 
 #pragma mark -- Setter Getter
@@ -156,6 +223,14 @@
         break;
     case LFCaptureSessionPreset720x1280:{
         avSessionPreset = AVCaptureSessionPreset1280x720;
+    }
+        break;
+    case LFCaptureSessionPreset1080x1920:{
+        avSessionPreset = AVCaptureSessionPreset1920x1080;
+    }
+        break;
+    case LFCaptureSessionPreset2160x3840:{
+        avSessionPreset = AVCaptureSessionPreset3840x2160;
     }
         break;
     default: {
@@ -219,6 +294,15 @@
     }
     
     if (![session canSetSessionPreset:self.avSessionPreset]) {
+        // Auto fallback cascade: 4K -> 1080p -> 720p -> 540p -> 360p
+        if (sessionPreset == LFCaptureSessionPreset2160x3840) {
+            sessionPreset = LFCaptureSessionPreset1080x1920;
+        }
+        if (sessionPreset == LFCaptureSessionPreset1080x1920) {
+            if (![session canSetSessionPreset:AVCaptureSessionPreset1920x1080]) {
+                sessionPreset = LFCaptureSessionPreset720x1280;
+            }
+        }
         if (sessionPreset == LFCaptureSessionPreset720x1280) {
             sessionPreset = LFCaptureSessionPreset540x960;
             if (![session canSetSessionPreset:self.avSessionPreset]) {
@@ -246,7 +330,14 @@
             videoSize = CGSizeMake(720, 1280);
         }
             break;
-            
+        case LFCaptureSessionPreset1080x1920:{
+            videoSize = CGSizeMake(1080, 1920);
+        }
+            break;
+        case LFCaptureSessionPreset2160x3840:{
+            videoSize = CGSizeMake(2160, 3840);
+        }
+            break;
         default:{
             videoSize = CGSizeMake(360, 640);
         }

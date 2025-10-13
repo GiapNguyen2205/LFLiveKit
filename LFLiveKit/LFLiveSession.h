@@ -25,6 +25,19 @@ typedef NS_ENUM(NSInteger,LFLiveCaptureType) {
     LFLiveInputVideo,           //< only video (External input video)
 };
 
+typedef NS_ENUM(NSInteger, LFLiveFilterType) {
+    LFLiveFilterTypeNone = 0,           //< no filter
+    LFLiveFilterTypeBeauty = 1,         //< beauty filter
+    LFLiveFilterTypeSepia = 2,          //< sepia filter
+    LFLiveFilterTypeBlur = 3,           //< blur filter
+    LFLiveFilterTypeSharpen = 4,        //< sharpen filter
+    LFLiveFilterTypeEmboss = 5,         //< emboss filter
+    LFLiveFilterTypeEdgeDetection = 6,  //< edge detection filter
+    LFLiveFilterTypeBlackWhite = 7,     //< black white filter
+    LFLiveFilterTypeVintage = 8,        //< vintage filter
+    LFLiveFilterTypeVivid = 9           //< vivid filter
+};
+
 
 ///< 用来控制采集类型（可以内部采集也可以外部传入等各种组合，支持单音频与单视频,外部输入适用于录屏，无人机等外设介入）
 typedef NS_ENUM(NSInteger,LFLiveCaptureTypeMask) {
@@ -74,6 +87,9 @@ typedef NS_ENUM(NSInteger,LFLiveCaptureTypeMask) {
 /** The beautyFace control capture shader filter empty or beautiy */
 @property (nonatomic, assign) BOOL beautyFace;
 
+/** The filterType control which filter to use */
+@property (nonatomic, assign) LFLiveFilterType filterType;
+
 /** The beautyLevel control beautyFace Level. Default is 0.5, between 0.0 ~ 1.0 */
 @property (nonatomic, assign) CGFloat beautyLevel;
 
@@ -113,7 +129,7 @@ typedef NS_ENUM(NSInteger,LFLiveCaptureTypeMask) {
 /** The reconnectCount control reconnect count (重连次数) *.*/
 @property (nonatomic, assign) NSUInteger reconnectCount;
 
-/*** The warterMarkView control whether the watermark is displayed or not ,if set ni,will remove watermark,otherwise add. 
+/*** The warterMarkView control whether the watermark is displayed or not ,if set ni,will remove watermark,otherwise add.
  set alpha represent mix.Position relative to outVideoSize.
  *.*/
 @property (nonatomic, strong, nullable) UIView *warterMarkView;
@@ -157,6 +173,9 @@ typedef NS_ENUM(NSInteger,LFLiveCaptureTypeMask) {
 
 /** support outer input pcm audio(set LFLiveCaptureTypeMask) .*/
 - (void)pushAudio:(nullable NSData*)audioData;
+
+/** set custom filter */
+- (void)setFilter:(LFLiveFilterType)filterType;
 
 @end
 
