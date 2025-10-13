@@ -67,8 +67,9 @@ NSString *const kLFGPUEmbossFragmentShaderString = SHADER_STRING
 
 - (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex {
     [super setInputSize:newSize atIndex:textureIndex];
+    inputTextureSize = newSize;
     
-    [self setSize:newSize forUniformName:@"imageSize"];
+    [self setSize:inputTextureSize forUniformName:@"imageSize"];
 }
 
 - (void)setIntensity:(CGFloat)intensity {

@@ -85,6 +85,7 @@ NSString *const kLFGPUVintageFragmentShaderString = SHADER_STRING
 
 - (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex {
     [super setInputSize:newSize atIndex:textureIndex];
+    inputTextureSize = newSize;
 }
 
 - (void)setIntensity:(CGFloat)intensity {
