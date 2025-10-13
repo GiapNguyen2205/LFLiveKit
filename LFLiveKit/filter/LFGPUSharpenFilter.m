@@ -62,7 +62,7 @@ NSString *const kLFGPUSharpenFragmentShaderString = SHADER_STRING
         return nil;
     }
 
-    _sharpness = 0.5;
+    _sharpness = 1.0;
     [self setFloat:_sharpness forUniformName:@"sharpness"];
     return self;
 }

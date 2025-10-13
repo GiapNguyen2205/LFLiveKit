@@ -11,11 +11,11 @@ NSString *const kLFGPUSepiaFragmentShaderString = SHADER_STRING
     void main(){
     highp vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);
     
-    // Ma trận sepia
+    // Ma trận sepia mạnh hơn
     highp mat3 sepiaMatrix = mat3(
-        0.393, 0.769, 0.189,
-        0.349, 0.686, 0.168,
-        0.272, 0.534, 0.131
+        0.3588, 0.7044, 0.1368,
+        0.2990, 0.5870, 0.1140,
+        0.2392, 0.4696, 0.0912
     );
     
     highp vec3 sepiaColor = sepiaMatrix * textureColor.rgb;
@@ -35,11 +35,11 @@ NSString *const kLFGPUSepiaFragmentShaderString = SHADER_STRING
     void main(){
     vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);
     
-    // Ma trận sepia
+    // Ma trận sepia mạnh hơn
     mat3 sepiaMatrix = mat3(
-        0.393, 0.769, 0.189,
-        0.349, 0.686, 0.168,
-        0.272, 0.534, 0.131
+        0.3588, 0.7044, 0.1368,
+        0.2990, 0.5870, 0.1140,
+        0.2392, 0.4696, 0.0912
     );
     
     vec3 sepiaColor = sepiaMatrix * textureColor.rgb;
@@ -58,7 +58,7 @@ NSString *const kLFGPUSepiaFragmentShaderString = SHADER_STRING
         return nil;
     }
 
-    _intensity = 1.0;
+    _intensity = 1.5;
     [self setFloat:_intensity forUniformName:@"intensity"];
     return self;
 }

@@ -172,12 +172,20 @@
 
 - (void)setBeautyFace:(BOOL)beautyFace{
     _beautyFace = beautyFace;
+    // Cập nhật filterType dựa trên beautyFace
+    if (beautyFace) {
+        self.filterType = LFLiveFilterTypeBeauty;
+    } else {
+        self.filterType = LFLiveFilterTypeNone;
+    }
     [self reloadFilter];
 }
 
 - (void)setFilterType:(LFLiveFilterType)filterType {
     _filterType = filterType;
+    NSLog(@" [LFVideoCapture] Setting filterType to: %ld", (long)filterType);
     [self reloadFilter];
+    NSLog(@" [LFVideoCapture] Filter reloaded successfully");
 }
 
 - (void)setBeautyLevel:(CGFloat)beautyLevel {
@@ -307,37 +315,48 @@
     switch (self.filterType) {
         case LFLiveFilterTypeNone:
             self.filter = [[LFGPUImageEmptyFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUImageEmptyFilter");
             break;
         case LFLiveFilterTypeBeauty:
             self.filter = [[LFGPUImageBeautyFilter alloc] init];
             self.beautyFilter = (LFGPUImageBeautyFilter*)self.filter;
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUImageBeautyFilter");
             break;
         case LFLiveFilterTypeSepia:
             self.filter = [[LFGPUSepiaFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUSepiaFilter");
             break;
         case LFLiveFilterTypeBlur:
             self.filter = [[LFGPUBlurFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUBlurFilter");
             break;
         case LFLiveFilterTypeSharpen:
             self.filter = [[LFGPUSharpenFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUSharpenFilter");
             break;
         case LFLiveFilterTypeEmboss:
             self.filter = [[LFGPUEmbossFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUEmbossFilter");
             break;
         case LFLiveFilterTypeEdgeDetection:
             self.filter = [[LFGPUEdgeDetectionFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUEdgeDetectionFilter");
             break;
         case LFLiveFilterTypeBlackWhite:
             self.filter = [[LFGPUBlackWhiteFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUBlackWhiteFilter");
             break;
         case LFLiveFilterTypeVintage:
             self.filter = [[LFGPUVintageFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUVintageFilter");
             break;
         case LFLiveFilterTypeVivid:
             self.filter = [[LFGPUVividFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created LFGPUVividFilter");
             break;
         default:
             self.filter = [[LFGPUImageEmptyFilter alloc] init];
+            NSLog(@"🎨 [LFVideoCapture] Created default LFGPUImageEmptyFilter");
             break;
     }
     

@@ -84,7 +84,7 @@ NSString *const kLFGPUEdgeDetectionFragmentShaderString = SHADER_STRING
         return nil;
     }
 
-    _threshold = 0.1;
+    _threshold = 0.3;
     [self setFloat:_threshold forUniformName:@"threshold"];
     return self;
 }

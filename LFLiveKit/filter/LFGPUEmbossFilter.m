@@ -60,7 +60,7 @@ NSString *const kLFGPUEmbossFragmentShaderString = SHADER_STRING
         return nil;
     }
 
-    _intensity = 1.0;
+    _intensity = 2.0;
     [self setFloat:_intensity forUniformName:@"intensity"];
     return self;
 }

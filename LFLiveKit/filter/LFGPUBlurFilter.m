@@ -62,7 +62,7 @@ NSString *const kLFGPUBlurFragmentShaderString = SHADER_STRING
         return nil;
     }
 
-    _blurRadius = 1.0;
+    _blurRadius = 2.0;
     [self setFloat:_blurRadius forUniformName:@"blurRadius"];
     return self;
 }
