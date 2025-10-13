@@ -15,6 +15,7 @@
 #import "LFLiveAudioConfiguration.h"
 #import "LFLiveVideoConfiguration.h"
 #import "LFLiveDebug.h"
+#import "LFLiveFilterType.h"
 
 
 
@@ -25,18 +26,6 @@ typedef NS_ENUM(NSInteger,LFLiveCaptureType) {
     LFLiveInputVideo,           //< only video (External input video)
 };
 
-typedef NS_ENUM(NSInteger, LFLiveFilterType) {
-    LFLiveFilterTypeNone = 0,           //< no filter
-    LFLiveFilterTypeBeauty = 1,         //< beauty filter
-    LFLiveFilterTypeSepia = 2,          //< sepia filter
-    LFLiveFilterTypeBlur = 3,           //< blur filter
-    LFLiveFilterTypeSharpen = 4,        //< sharpen filter
-    LFLiveFilterTypeEmboss = 5,         //< emboss filter
-    LFLiveFilterTypeEdgeDetection = 6,  //< edge detection filter
-    LFLiveFilterTypeBlackWhite = 7,     //< black white filter
-    LFLiveFilterTypeVintage = 8,        //< vintage filter
-    LFLiveFilterTypeVivid = 9           //< vivid filter
-};
 
 
 ///< 用来控制采集类型（可以内部采集也可以外部传入等各种组合，支持单音频与单视频,外部输入适用于录屏，无人机等外设介入）
