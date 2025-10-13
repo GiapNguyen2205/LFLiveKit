@@ -67,6 +67,10 @@ NSString *const kLFGPUVividFragmentShaderString = SHADER_STRING
     return self;
 }
 
+- (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex {
+    [super setInputSize:newSize atIndex:textureIndex];
+}
+
 - (void)setSaturation:(CGFloat)saturation {
     _saturation = saturation;
     [self setFloat:_saturation forUniformName:@"saturation"];

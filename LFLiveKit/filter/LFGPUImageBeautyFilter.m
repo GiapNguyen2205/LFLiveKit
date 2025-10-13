@@ -239,9 +239,8 @@ NSString *const kLFGPUImageBeautyFragmentShaderString = SHADER_STRING
 
 - (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex {
     [super setInputSize:newSize atIndex:textureIndex];
-    inputTextureSize = newSize;
 
-    CGPoint offset = CGPointMake(2.0f / inputTextureSize.width, 2.0 / inputTextureSize.height);
+    CGPoint offset = CGPointMake(2.0f / newSize.width, 2.0 / newSize.height);
     [self setPoint:offset forUniformName:@"singleStepOffset"];
 }
 

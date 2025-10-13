@@ -91,7 +91,6 @@ NSString *const kLFGPUEdgeDetectionFragmentShaderString = SHADER_STRING
 
 - (void)setInputSize:(CGSize)newSize atIndex:(NSInteger)textureIndex {
     [super setInputSize:newSize atIndex:textureIndex];
-    inputTextureSize = newSize;
     
     GPUVector2 imageSize = {newSize.width, newSize.height};
     [self setFloatVec2:imageSize forUniform:@"imageSize"];
