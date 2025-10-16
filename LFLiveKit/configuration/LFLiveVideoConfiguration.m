@@ -217,6 +217,10 @@
         avSessionPreset = AVCaptureSessionPreset640x480;
     }
         break;
+    case LFCaptureSessionPreset480x848:{
+        avSessionPreset = AVCaptureSessionPreset640x480;
+    }
+        break;
     case LFCaptureSessionPreset540x960:{
         avSessionPreset = AVCaptureSessionPresetiFrame960x540;
     }
@@ -294,7 +298,7 @@
     }
     
     if (![session canSetSessionPreset:self.avSessionPreset]) {
-        // Auto fallback cascade: 4K -> 1080p -> 720p -> 540p -> 360p
+        // Auto fallback cascade: 4K -> 1080p -> 720p -> 540p -> 480p -> 360p
         if (sessionPreset == LFCaptureSessionPreset2160x3840) {
             sessionPreset = LFCaptureSessionPreset1080x1920;
         }
@@ -306,9 +310,17 @@
         if (sessionPreset == LFCaptureSessionPreset720x1280) {
             sessionPreset = LFCaptureSessionPreset540x960;
             if (![session canSetSessionPreset:self.avSessionPreset]) {
-                sessionPreset = LFCaptureSessionPreset360x640;
+                sessionPreset = LFCaptureSessionPreset480x848;
+                if (![session canSetSessionPreset:self.avSessionPreset]) {
+                    sessionPreset = LFCaptureSessionPreset360x640;
+                }
             }
         } else if (sessionPreset == LFCaptureSessionPreset540x960) {
+            sessionPreset = LFCaptureSessionPreset480x848;
+            if (![session canSetSessionPreset:self.avSessionPreset]) {
+                sessionPreset = LFCaptureSessionPreset360x640;
+            }
+        } else if (sessionPreset == LFCaptureSessionPreset480x848) {
             sessionPreset = LFCaptureSessionPreset360x640;
         }
     }
@@ -320,6 +332,10 @@
     switch (_sessionPreset) {
         case LFCaptureSessionPreset360x640:{
             videoSize = CGSizeMake(360, 640);
+        }
+            break;
+        case LFCaptureSessionPreset480x848:{
+            videoSize = CGSizeMake(480, 848);
         }
             break;
         case LFCaptureSessionPreset540x960:{
